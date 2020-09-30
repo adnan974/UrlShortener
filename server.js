@@ -1,7 +1,10 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+
 
 app.set("view engine","ejs");
+app.use(bodyParser.urlencoded({extended : false}));
 
 app.get("/",function(req,res){
     console.log("on est là");
@@ -10,7 +13,7 @@ app.get("/",function(req,res){
 })
 
 app.post("/",function(req,res){
-    console.log("formulaire envoyer Ok");
+    console.log("contenu du formulaire  : "+req.body.urlInput);
     res.render("index");
 
 })
