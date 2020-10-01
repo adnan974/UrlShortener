@@ -1,9 +1,19 @@
+
+// On appele les modules dont a besoin
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
+// 
+mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true,useUnifiedTopology: true});
 
+// middleware qui permet de de dire quel type de langage on va utiliser pour les vues. 
+// Ex. Utilise pour faire une render d'une vue avec ejs
 app.set("view engine","ejs");
+
+// middleware qui permet de parser une url. 
+// Ex. Utile pour recupérer les données d'un formulaire
 app.use(bodyParser.urlencoded({extended : false}));
 
 app.get("/",function(req,res){
