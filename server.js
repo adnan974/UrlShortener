@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+var ShortUrlModel = require('./Models/ShortUrlModel')
 // 
 mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true,useUnifiedTopology: true});
 
@@ -25,6 +25,7 @@ app.get("/",function(req,res){
 app.post("/",function(req,res){
     console.log("contenu du formulaire  : "+req.body.urlInput);
     res.render("index");
+    ShortUrlModel.create({fullUrl: req.body.urlInput});
 
 })
 
