@@ -18,14 +18,17 @@ app.use(bodyParser.urlencoded({extended : false}));
 
 app.get("/",function(req,res){
     console.log("on est là");
-    res.render("index");
+
+    // on récupere toutes les données dans la table ShortUrl
+    const shortUrls = ShortUrlModel.find();
+    res.render("index",{shortUrl});
     
 })
 
 app.post("/",function(req,res){
     console.log("contenu du formulaire  : "+req.body.urlInput);
-    res.render("index");
     ShortUrlModel.create({fullUrl: req.body.urlInput});
+    res.render("index");
 
 })
 
