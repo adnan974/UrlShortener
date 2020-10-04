@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 
+// module qui permet de générer des ids uniques
+var shortid = require('shortid');
+
 var shortUrlShema = mongoose.Schema({
     fullUrl:{
         type: String,
@@ -8,7 +11,7 @@ var shortUrlShema = mongoose.Schema({
     shortUrl:{
         type:String,
         required:true,
-        default:"UnAutreTest"
+        default:shortid.generate
     }
 })
 
