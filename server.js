@@ -18,16 +18,13 @@ app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended : false}));
 
 app.get("/", async function(req,res){
-    console.log("on est là");
 // on récupere toutes les données dans la table ShortUrl
 var shortUrls = await ShortUrlModel.find();
-    console.log("short urls: "+shortUrls);
     res.render("index",{shortUrls});
     
 })
 
 app.post("/",function(req,res){
-    console.log("contenu du formulaire  : "+req.body.urlInput);
     ShortUrlModel.create({fullUrl: req.body.urlInput});
 
     //On envoie l'utilistauer sur la route "/", ce qui va éxécuter le app.get("/",...)
@@ -36,14 +33,13 @@ app.post("/",function(req,res){
 
 })
 
-app.get("/:shortUrl",function(req,res){
-    console.log(ShortUrlModel.findOne({shortUrl:':shortUrl'}));
-   /*  if (ShortUrlModel.findOne({shortUrl:':shortUrl'}) != null){
-         console.log("url trouvée dans la BDD");
-     }
-     else{
-         console.log("Url non trouvée dans la base");
-     } */
+// async await est indispensable 
+app.get("/:shortUrl",async function(req,res){
+    const isShortUrlFind =  await ShortUrlModel.findOne({shortUrl: req.params.shortUrl});
+   if (isShortUrlFind == null){
+       res.sendStatus(404);
+    }
+    res.redirect("http://"+isShortUrlFind.fullUrl);
 })
 
 app.listen(5000);
